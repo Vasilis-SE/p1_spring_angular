@@ -2,11 +2,9 @@ package com.myback.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.myback.dao.Country;
+import com.myback.dto.CountryDto;
 import com.myback.service.CountryService;
 
 @RestController
@@ -17,7 +15,8 @@ public class CountryController {
     private CountryService countryService;
 
     @GetMapping
-    public List<Country> getAllCountries() {
+    public List<CountryDto> getAllCountries() {
         return countryService.getAllCountries();
     }
+    
 }
