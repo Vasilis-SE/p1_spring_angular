@@ -1,19 +1,21 @@
 version: "3.9"
 
+name: p1_spring_angular
+
 services:
   mariadb:
     image: mariadb
     container_name: mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: password
-      MYSQL_DATABASE: nation
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/docker-entrypoint-initdb.d
+      - ../data:/docker-entrypoint-initdb.d
     networks:
       - mybacknet
 
@@ -25,11 +27,12 @@ services:
     restart: always
     depends_on:
       - mariadb
+    volumes:
+      - ../volumes/dbeaver:/opt/cloudbeaver/workspace      
     networks:
       - mybacknet
 
 volumes:
-  mariadb:
   dbeaver:
 
 networks:
