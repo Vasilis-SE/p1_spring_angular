@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: nation
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/docker-entrypoint-initdb.d
+    networks:
+      - mybacknet
+
+  dbeaver:
+    image: dbeaver/cloudbeaver
+    ports: 
+      - "8000:8978"
+    container_name: dbeaver
+    restart: always
+    depends_on:
+      - mariadb
+    networks:
+      - mybacknet
+
+volumes:
+  mariadb:
+  dbeaver:
+
+networks:
+  mybacknet:
+    driver: bridge
