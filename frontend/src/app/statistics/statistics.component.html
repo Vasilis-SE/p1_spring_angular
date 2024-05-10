@@ -1,0 +1,24 @@
+<div class="container">
+
+    <h3 class="row text-center mt-3 p-2"> Best GDP per country along the years</h3>
+    <table class="table table-dark table-striped p-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Country Code</th>
+                <th>Year</th>
+                <th>Population</th>
+                <th>GDP</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let stat of statistics"> 
+                <td>{{stat.name}} </td>
+                <td>{{stat.country_code3}}</td>
+                <td>{{stat.year}}</td>
+                <td>{{stat.population}}</td>
+                <td>{{stat.gdp}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

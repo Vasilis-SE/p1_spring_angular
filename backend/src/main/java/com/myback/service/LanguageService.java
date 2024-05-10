@@ -26,11 +26,10 @@ public class LanguageService {
 
         List<LanguageForCountryDto> listOfLanguages = new ArrayList<LanguageForCountryDto>();
         for (CountryLanguageDao cl : countryToLangList) {
-            listOfLanguages.add(LanguageForCountryDto.builder()
-                .language_id(cl.getLanguage().getLanguage_id())
-                .language(cl.getLanguage().getLanguage())
-                .official(cl.getOfficial())
-                .build());
+            listOfLanguages.add(new LanguageForCountryDto(
+                cl.getLanguage().getLanguage_id(), 
+                cl.getLanguage().getLanguage(), 
+                cl.getOfficial()));
         }  
 
         return LanguagesPerCountryDto.builder()
