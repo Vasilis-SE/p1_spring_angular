@@ -1,23 +1,26 @@
 package com.myback.dao;
 
-import java.util.Set;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "country_languages")
+@IdClass(CountryLanguageId.class)
 public class CountryLanguageDao {
     
     @Id
-    @Column(nullable = false)
-    private int country_id;
-    
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CountryDao.class)
+    @JoinColumn(name = "country_id")
+    private CountryDao country;
+
     @Id
-    @Column(nullable = false)
-    private int language_id;
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = LanguagesDao.class)
+    @JoinColumn(name = "language_id")
+    private LanguagesDao language;
 
     @Column(nullable = false)
     private int official;

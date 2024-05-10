@@ -1,16 +1,21 @@
 package com.myback.dao;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
-
+@Data
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Accessors(chain = true)
 @Table(name = "countries")
 public class CountryDao {
     
@@ -38,4 +43,6 @@ public class CountryDao {
     @Column(nullable = false)
     private int region_id;
 
+    @OneToMany(mappedBy="country_id")
+    private List<CountryStatsDao> statistics;
 }

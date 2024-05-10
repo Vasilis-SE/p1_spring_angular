@@ -4,21 +4,28 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+@Data
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@Table(name = "languages")
-public class LanguagesDao {
-        
+@Table(name = "country_stats")
+public class CountryStatsDao {
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private int language_id;
+    private int country_id;
 
+    @Id
     @Column(nullable = false)
-    private String language;
+    private int year;
 
+    @Column(nullable = true)
+    private long population;
+
+    @Column(nullable = true)
+    private long gdp;
+    
 }

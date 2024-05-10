@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import com.myback.dao.LanguagesDao;
+import com.myback.dao.CountryLanguageDao;
+import com.myback.dto.LanguagesPerCountryDto;
 import com.myback.service.LanguageService;
 
 
@@ -16,9 +17,14 @@ public class LanguageController {
     @Autowired
     private LanguageService languageService;
 
-    @GetMapping("/bycountry/{cid}")
-    public List<LanguagesDao> getLanguagesByCountryId(@PathVariable int cid) {
-        return languageService.getAll(cid);
+    @GetMapping()
+    public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {
+        return languageService.getAllCountryToLanguageCorrelations();
+    }
+
+    @GetMapping("/{cid}")
+    public LanguagesPerCountryDto getLanguagesByCountryId(@PathVariable int cid) {
+        return languageService.getLanguagesByCountryId(cid);
     }
 
 }
