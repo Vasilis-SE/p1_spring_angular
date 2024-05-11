@@ -45,4 +45,5 @@ public class CountryDao {
 
     @OneToMany(mappedBy="country_id")
     private List<CountryStatsDao> statistics;
+    
 }
