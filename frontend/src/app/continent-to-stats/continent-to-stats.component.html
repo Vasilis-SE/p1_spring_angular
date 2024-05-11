@@ -1,8 +1,9 @@
 <div class="container">
-    <div class="row mt-3">
-        <div class="col-md-8">
+
+    <div class="row mt-3 bg-body-tertiary p-2">
+        <div class="col-md-7">
             <div class="input-group mb-3">
-                <select class="form-control" #chosenRegionFilter (change)="searchByRegion(chosenRegionFilter.value)">
+                <select class="form-control" [(ngModel)]="filterRegion">
                     <option value=""> Select a regions... </option>
                     <option value="{{region}}" *ngFor="let region of getListOfDistinctRegions()"> {{ region }} </option>
                 </select>
@@ -13,32 +14,35 @@
             </div>
         </div>
 
-        <div class="col-md-2">
-            <div class="input-group mb-3">
-                <select class="form-control">
-                    <option> Select from... </option>
-                    <option *ngFor="let year of getListOfDistinctYears()"> {{ year }} </option>
-                </select>             
-                <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2"> <i class="bi bi-caret-down-fill"></i> </span>
-                </div>
-            </div>
+        <div class="col-md-2 pr-0">
+            <select class="form-control" [(ngModel)]="filterFromYear">
+                <option value="-1"> Select from... </option>
+                <option value="{{year}}" *ngFor="let year of getListOfDistinctYears()"> {{ year }} </option>
+            </select>     
         </div>
 
-        <div class="col-md-2">
-            <div class="input-group mb-3">
-                <select class="form-control">
-                    <option> Select to... </option>
-                    <option *ngFor="let year of getListOfDistinctYears()"> {{ year }} </option>
-                </select>                
-                <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2"> <i class="bi bi-caret-down-fill"></i> </span>
-                </div>
-            </div>
+        <div class="col-md-1 fs-3 pl-0 pr-0">
+            <i class="bi bi-arrows"></i>
+        </div>
+
+        <div class="col-md-2 pl-0">
+            <select class="form-control" [(ngModel)]="filterToYear">
+                <option value="-1"> Select to... </option>
+                <option value="{{year}}" *ngFor="let year of getListOfDistinctYears()"> {{ year }} </option>
+            </select>    
+        </div>
+
+        <div class="col-md-12 alert alert-danger" *ngIf="errorMessage">
+            {{errorMessage}}
+        </div>
+
+        <div class="col-md-12">
+            <button class="btn btn-secondary w-100" (click)="searchByFilters()"> Search </button>
         </div>
     </div>
-    <div class="row">
-        <table class="table table-dark table-striped">
+
+    <div class="row mt-3">
+        <table class="table table-dark table-striped ">
             <thead>
                 <tr>
                     <th>Continent Name</th>
@@ -50,6 +54,8 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- let cts of continentToStatsDisplay -->
+                <!-- let item of [].constructor(pageSize); let i = index -->
                 <tr *ngFor="let cts of continentToStatsDisplay">
                     <td>{{cts.continent_name}} </td>
                     <td>{{cts.region_name}}</td>
@@ -61,4 +67,9 @@
             </tbody>
         </table>
     </div>
+
+    <div class="row mt-1 mb-2">
+        <button class="btn btn-secondary btn-sm" *ngFor="let item of [].constructor(numOfPages); let page = index" style="width: auto; margin-left: 3px; margin-top: 3px;"> {{page}} </button>
+    </div>
+
 </div>
