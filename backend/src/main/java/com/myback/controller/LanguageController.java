@@ -17,14 +17,14 @@ public class LanguageController {
     @Autowired
     private LanguageService languageService;
 
-    @GetMapping()
-    public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {
-        return languageService.getAllCountryToLanguageCorrelations();
-    }
+    // @GetMapping()
+    // public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {
+    //     return languageService.getAllCountryToLanguageCorrelations();
+    // }
 
-    @GetMapping("/{cid}")
-    public LanguagesPerCountryDto getLanguagesByCountryId(@PathVariable int cid) {
-        return languageService.getLanguagesByCountryId(cid);
-    }
+    // @GetMapping("/{cid}")
+    // public LanguagesPerCountryDto getLanguagesByCountryId(@PathVariable int cid) {
+    //     return languageService.getLanguagesByCountryId(cid);
+    // }
 
 }

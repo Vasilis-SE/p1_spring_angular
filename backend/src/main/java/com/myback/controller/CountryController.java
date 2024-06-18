@@ -16,19 +16,19 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @GetMapping
-    public List<CountryDto> getAllCountries() {
-        return countryService.getAllCountries();
-    }
+    // @GetMapping
+    // public List<CountryDto> getAllCountries() {
+    //     return countryService.getAllCountries();
+    // }
 
-    @GetMapping("/stats")
-    public List<CountryDao> getAllCountriesWithStats() {
-        return countryService.getAllCountriesWithStats();
-    }
+    // @GetMapping("/stats")
+    // public List<CountryDao> getAllCountriesWithStats() {
+    //     return countryService.getAllCountriesWithStats();
+    // }
 
-    @GetMapping("/stats/mgdp")
-    public List<CountryMaxGdpDto> getAllCountriesAndTheirMaxGdp() {
-        return countryService.getAllCountriesAndTheirMaxGdp();
-    }
+    // @GetMapping("/stats/mgdp")
+    // public List<CountryMaxGdpDto> getAllCountriesAndTheirMaxGdp() {
+    //     return countryService.getAllCountriesAndTheirMaxGdp();
+    // }
 
 }
