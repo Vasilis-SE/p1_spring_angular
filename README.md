@@ -1,6 +1,7 @@
 # p1_spring_angular
 
 To setup the environment follow the below steps:
+
 <ul>
     <li><b>Step 1</b> - CD to backend/docker directoty</li>
     <li><b>Setp 2</b> - Execute: docker-compose --env-file ../env/.env up -d </li>
