@@ -7,18 +7,17 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
-
-import jakarta.persistence.Tuple;
+import com.myback.dto.RegionToStatsDto;
 
 public interface ContinentRepository extends JpaRepository<ContinentDao, Integer> {
 
-    @Query(value = "SELECT continents.name as cname, regions.name as rname, countries.name as coname, " +
-            "country_stats.`year`, country_stats.population, country_stats.gdp " +
-            "FROM continents " +
-            "LEFT JOIN regions ON regions.continent_id = continents.continent_id " +
-            "LEFT JOIN countries ON countries.region_id = regions.region_id " +
-            "LEFT JOIN country_stats ON country_stats.country_id = countries.country_id", nativeQuery = true)
-    public List<Tuple> fetchRegionToStatsDataMinified();
+    @Query("SELECT new com.myback.dto.RegionToStatsDto(c.name AS continent_name, r.name AS region_name, " +
+        "co.name AS country_name, s.year AS year, s.population AS population, s.gdp as gdp) " +
+        "FROM ContinentDao c " +
+        "LEFT JOIN c.regions r " +
+        "LEFT JOIN r.countries co " +
+        "LEFT JOIN co.statistics s ")
+    public List<RegionToStatsDto> fetchRegionToStatsDataMinified();
 
     // Fetch continents without regions
     @Query("SELECT new com.myback.dto.ContinentDto(c.continent_id, c.name) FROM ContinentDao c")

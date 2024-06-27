@@ -43,7 +43,7 @@ public class ContinentController {
 
 
 
-    @GetMapping("/continents/min")
+    @GetMapping("/continents/tree/min")
     public List<RegionToStatsDto> getRegionToStatsDataMinified() {
         return continentService.getRegionToStatsDataMinified();
     }
