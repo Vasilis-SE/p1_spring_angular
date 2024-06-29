@@ -1,0 +1,38 @@
+spring:
+    application:
+        name: myback
+    datasource:
+        url: jdbc:mariadb://localhost:${DB_PORT}/${DB_DATABASE}
+        username: ${DB_USER}
+        password: ${DB_PASSWORD}
+        driver-class-name: org.mariadb.jdbc.Driver
+    jpa: 
+        hibernate:
+            ddl-auto: none
+
+server: 
+    port: ${APP_PORT}
+
+logging:
+    file:
+        name: logs/app.log
+    level:
+        root: warn
+        org:
+            hibernate: error
+            springframework:
+                web: info
+        com:
+            myback: info     
+    logback:
+        rollingpolicy:
+            file-name-pattern: logs/%d{yyyy-MM, aux}/app.%d{yyyy-MM-dd}.%i.log
+            max-file-size: 1MB
+            total-size-cap: 20MB
+            max-history: 10
+
+springdoc:
+    api-docs:
+        path: /docs/api
+    swagger-ui: 
+        path: /docs/index.html

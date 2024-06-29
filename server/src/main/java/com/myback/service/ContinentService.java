@@ -26,15 +26,15 @@ public class ContinentService {
         return continentRepository.fetchContinentById(id);
     }
 
-    public List<ContinentDao> getContinentWithRegionsTree() {
+    public List<ContinentDao> getContinentsTree() {
         return continentRepository.findAll();
     }
 
-    public Optional<ContinentDao> getContinentWithRegionsTreeById(int id) {
+    public Optional<ContinentDao> getContinentTreeById(int id) {
         return continentRepository.findById(id);
     }
 
-    public List<RegionToStatsDto> getRegionToStatsDataMinified() {
+    public List<RegionToStatsDto> getContinentsTreeWithStatsMin() {
         return continentRepository.fetchRegionToStatsDataMinified();
     }
 
