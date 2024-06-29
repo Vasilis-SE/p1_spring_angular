@@ -1,7 +1,5 @@
 package com.myback.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +10,6 @@ import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
 import com.myback.dto.RegionToStatsDto;
 import com.myback.repository.ContinentRepository;
-
-import jakarta.persistence.Tuple;
 
 @Service
 public class ContinentService {
