@@ -11,13 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
 import com.myback.dto.RegionToStatsDto;
+import com.myback.exception.InvalidArgumentException;
 import com.myback.service.ContinentService;
 
 @RestController
 @RequestMapping("/api/v1")
 public class ContinentController {
-
-    private static final Logger logger = LoggerFactory.getLogger(ContinentController.class);
 
     @Autowired
     private ContinentService continentService;
@@ -42,14 +41,15 @@ public class ContinentController {
         return continentService.getContinentTreeById(id);
     }
 
-
-
-
-
-
     @GetMapping("/continents/tree/min")
-    public List<RegionToStatsDto> getContinentsTreeWithStatsMin() {
-        return continentService.getContinentsTreeWithStatsMin();
+    public List<RegionToStatsDto> getContinentsTreeWithStatsMin(@RequestParam("page") Integer p, @RequestParam("size") Optional<Integer> s) throws InvalidArgumentException {
+        Integer page = p;
+        Integer size = (!s.isPresent()) ? 10 : s.get();
+
+        if(page < 0) throw new InvalidArgumentException(null, "page", page.toString(), ">=0");
+        if(size <= 0) throw new InvalidArgumentException(null, "size", size.toString(), ">0");
+
+        return continentService.getContinentsTreeWithStatsMin(page, size);
     }
 
 }

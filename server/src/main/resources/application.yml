@@ -12,6 +12,8 @@ spring:
 
 server: 
     port: ${APP_PORT}
+    error:
+        include-stacktrace: never
 
 logging:
     file:
@@ -26,7 +28,7 @@ logging:
             myback: info     
     logback:
         rollingpolicy:
-            file-name-pattern: logs/%d{yyyy-MM, aux}/app.%d{yyyy-MM-dd}.%i.log
+            file-name-pattern: logs/%d{yyyy-MM-dd}_%i.log
             max-file-size: 1MB
             total-size-cap: 20MB
             max-history: 10

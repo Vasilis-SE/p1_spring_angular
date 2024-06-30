@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
 import com.myback.dto.RegionToStatsDto;
 import com.myback.repository.ContinentRepository;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class ContinentService {
@@ -34,8 +36,9 @@ public class ContinentService {
         return continentRepository.findById(id);
     }
 
-    public List<RegionToStatsDto> getContinentsTreeWithStatsMin() {
-        return continentRepository.fetchRegionToStatsDataMinified();
+    public List<RegionToStatsDto> getContinentsTreeWithStatsMin(Integer page, Integer size) {
+        Pageable pagination = PageRequest.of(page, size);
+        return continentRepository.fetchRegionToStatsDataMinified(pagination);
     }
 
 }
