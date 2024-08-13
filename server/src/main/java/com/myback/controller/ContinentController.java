@@ -3,10 +3,11 @@ package com.myback.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
@@ -32,8 +33,23 @@ public class ContinentController {
     }
 
     @GetMapping("/continents/tree")
-    public List<ContinentDao> getContinentsTree() {
-        return continentService.getContinentsTree();
+    public List<ContinentDao> getContinentsTree(
+        @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
+        @RequestParam(name = "size", defaultValue = "2", required = false) Integer size,
+        @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
+        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+    ) throws InvalidArgumentException {
+
+        if(page < 0) throw new InvalidArgumentException(null, "page", page.toString(), ">=0");
+        if(size <= 0) throw new InvalidArgumentException(null, "size", size.toString(), ">0");
+        
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+            ? Sort.by(sortBy).ascending()
+            : Sort.by(sortBy).descending();
+
+        Pageable pagination = PageRequest.of(page, size, sort);
+        
+        return continentService.getContinentsTree(pagination);
     }
 
     @GetMapping("/continents/tree/{id}")
@@ -42,14 +58,23 @@ public class ContinentController {
     }
 
     @GetMapping("/continents/tree/min")
-    public List<RegionToStatsDto> getContinentsTreeWithStatsMin(@RequestParam("page") Integer p, @RequestParam("size") Optional<Integer> s) throws InvalidArgumentException {
-        Integer page = p;
-        Integer size = (!s.isPresent()) ? 10 : s.get();
+    public List<RegionToStatsDto> getContinentsTreeWithStatsMin(
+        @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
+        @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+        @RequestParam(value = "sortBy", defaultValue = "continent_name", required = false) String sortBy,
+        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+    ) throws InvalidArgumentException {
 
         if(page < 0) throw new InvalidArgumentException(null, "page", page.toString(), ">=0");
         if(size <= 0) throw new InvalidArgumentException(null, "size", size.toString(), ">0");
 
-        return continentService.getContinentsTreeWithStatsMin(page, size);
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
+            ? Sort.by(sortBy).ascending()
+            : Sort.by(sortBy).descending();
+
+        Pageable pagination = PageRequest.of(page, size, sort);
+
+        return continentService.getContinentsTreeWithStatsMin(pagination);
     }
 
 }

@@ -15,15 +15,4 @@ public class RegionToStatsDto {
     private Integer year;
     private Long population;
     private Long gdp;
-
-
-    // public RegionToStatsDto(String cn, String rn, String con, int y, Integer p) {
-    //     this.continent_name = cn;
-    //     this.region_name = rn;
-    //     this.country_name = con;
-    //     this.year = y;
-    //     this.population = (null == p) ? 0 : p;
-    //     // this.gdp = g;
-    // }
-
 }
