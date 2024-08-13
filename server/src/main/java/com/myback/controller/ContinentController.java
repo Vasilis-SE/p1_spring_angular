@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
+import com.myback.dto.HttpResponseDto;
 import com.myback.dto.RegionToStatsDto;
 import com.myback.exception.InvalidArgumentException;
 import com.myback.service.ContinentService;
@@ -33,7 +34,7 @@ public class ContinentController {
     }
 
     @GetMapping("/continents/tree")
-    public List<ContinentDao> getContinentsTree(
+    public HttpResponseDto<List<ContinentDao>> getContinentsTree(
         @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
         @RequestParam(name = "size", defaultValue = "2", required = false) Integer size,
         @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
@@ -58,7 +59,7 @@ public class ContinentController {
     }
 
     @GetMapping("/continents/tree/min")
-    public List<RegionToStatsDto> getContinentsTreeWithStatsMin(
+    public HttpResponseDto<List<RegionToStatsDto>> getContinentsTreeWithStatsMin(
         @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
         @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
         @RequestParam(value = "sortBy", defaultValue = "continent_name", required = false) String sortBy,

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.domain.Page;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
@@ -19,7 +20,7 @@ public interface ContinentRepository extends JpaRepository<ContinentDao, Integer
             "LEFT JOIN c.regions r " +
             "LEFT JOIN r.countries co " +
             "LEFT JOIN co.statistics s ")
-    public List<RegionToStatsDto> fetchRegionToStatsDataMinified(Pageable pageable);
+    public Page<RegionToStatsDto> fetchRegionToStatsDataMinified(Pageable pageable);
 
     // Fetch continents without regions
     @Query("SELECT new com.myback.dto.ContinentDto(c.continent_id, c.name) FROM ContinentDao c")
