@@ -24,8 +24,18 @@ public class ContinentController {
     private ContinentService continentService;
 
     @GetMapping("/continents")
-    public List<ContinentDto> getContinentsList() {
-        return continentService.getContinentsList();
+    public HttpResponseDto<List<ContinentDto>> getContinentsList(
+        @RequestParam(value = "sort", defaultValue = "name", required = false) String sort,
+        @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir
+    ) {        
+        Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
+            ? Sort.by(sort).ascending()
+            : Sort.by(sort).descending();
+
+        Pageable pagination = PageRequest.of(0, Integer.MAX_VALUE, sorting);
+        
+
+        return continentService.getContinentsList(pagination);
     }
 
     @GetMapping("/continent/{id}")
@@ -33,22 +43,25 @@ public class ContinentController {
         return continentService.getContinentById(id);
     }
 
+
+
+
+
+
+
+    
     @GetMapping("/continents/tree")
     public HttpResponseDto<List<ContinentDao>> getContinentsTree(
         @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
         @RequestParam(name = "size", defaultValue = "2", required = false) Integer size,
-        @RequestParam(value = "sortBy", defaultValue = "name", required = false) String sortBy,
-        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
-    ) throws InvalidArgumentException {
+        @RequestParam(value = "sort", defaultValue = "name", required = false) String sort,
+        @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir
+    ) throws InvalidArgumentException {        
+        Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
+            ? Sort.by(sort).ascending()
+            : Sort.by(sort).descending();
 
-        if(page < 0) throw new InvalidArgumentException(null, "page", page.toString(), ">=0");
-        if(size <= 0) throw new InvalidArgumentException(null, "size", size.toString(), ">0");
-        
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
-            ? Sort.by(sortBy).ascending()
-            : Sort.by(sortBy).descending();
-
-        Pageable pagination = PageRequest.of(page, size, sort);
+        Pageable pagination = PageRequest.of(page, size, sorting);
         
         return continentService.getContinentsTree(pagination);
     }
@@ -62,18 +75,14 @@ public class ContinentController {
     public HttpResponseDto<List<RegionToStatsDto>> getContinentsTreeWithStatsMin(
         @RequestParam(name = "page", defaultValue = "0", required = false) Integer page, 
         @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-        @RequestParam(value = "sortBy", defaultValue = "continent_name", required = false) String sortBy,
-        @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir
+        @RequestParam(value = "sort", defaultValue = "continent_name", required = false) String sort,
+        @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir
     ) throws InvalidArgumentException {
+        Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
+            ? Sort.by(sort).ascending()
+            : Sort.by(sort).descending();
 
-        if(page < 0) throw new InvalidArgumentException(null, "page", page.toString(), ">=0");
-        if(size <= 0) throw new InvalidArgumentException(null, "size", size.toString(), ">0");
-
-        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())
-            ? Sort.by(sortBy).ascending()
-            : Sort.by(sortBy).descending();
-
-        Pageable pagination = PageRequest.of(page, size, sort);
+        Pageable pagination = PageRequest.of(page, size, sorting);
 
         return continentService.getContinentsTreeWithStatsMin(pagination);
     }

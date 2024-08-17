@@ -6,10 +6,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "regions")
 public class RegionDao {
     
@@ -24,8 +20,7 @@ public class RegionDao {
     @Column(nullable = false)
     private int continent_id;
 
-    @OneToMany(mappedBy="region_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="region_id", fetch = FetchType.LAZY)
     private List<CountryDao> countries;
     
-
 }
