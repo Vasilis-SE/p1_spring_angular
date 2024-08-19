@@ -25,6 +25,9 @@ public class ContinentController {
 
     @Autowired
     private ContinentService continentService;
+    
+    @Autowired
+    private HttpResponseBuilder httpResponseBuilder;
 
     @GetMapping("/continents")
     @ResponseStatus(HttpStatus.OK)
@@ -35,17 +38,15 @@ public class ContinentController {
                 ? Sort.by(sort).ascending()
                 : Sort.by(sort).descending();
 
-        Pageable pagination = PageRequest.of(0, Integer.MAX_VALUE, sorting);
-
-        Page<ContinentDto> data = continentService.getContinentsList(pagination);
-        return HttpResponseBuilder.build(data);
+        List<ContinentDto> data = continentService.getContinentsList(sorting);
+        return httpResponseBuilder.build(data);
     }
 
     @GetMapping("/continent/{id}")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto<ContinentDto> getContinentById(@PathVariable int id) {
         ContinentDto data = continentService.getContinentById(id);
-        return HttpResponseBuilder.build(data);
+        return httpResponseBuilder.build(data);
     }
 
     @GetMapping("/continents/tree")
@@ -63,14 +64,14 @@ public class ContinentController {
         Pageable pagination = PageRequest.of(page, size, sorting);
 
         Page<ContinentDao> data = continentService.getContinentsTree(pagination);
-        return HttpResponseBuilder.build(data);
+        return httpResponseBuilder.build(data);
     }
 
     @GetMapping("/continents/tree/{id}")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto<ContinentDao> getContinentTreeById(int id) {
         ContinentDao data = continentService.getContinentTreeById(id);
-        return HttpResponseBuilder.build(data);
+        return httpResponseBuilder.build(data);
     }
 
     @GetMapping("/continents/tree/min")
@@ -88,7 +89,7 @@ public class ContinentController {
         Pageable pagination = PageRequest.of(page, size, sorting);
 
         Page<RegionToStatsDto> data = continentService.getContinentsTreeWithStatsMin(pagination);
-        return HttpResponseBuilder.build(data);
+        return httpResponseBuilder.build(data);
     }
 
 }

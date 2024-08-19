@@ -2,6 +2,7 @@ package com.myback.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
@@ -11,6 +12,7 @@ import com.myback.repository.ContinentRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class ContinentService {
@@ -23,9 +25,9 @@ public class ContinentService {
      * 
      * @return A list of continents.
      */
-    public Page<ContinentDto> getContinentsList(Pageable pagination) {
-        Page<ContinentDto> data = continentRepository.fetchAllContinents(pagination);
-        if (!data.hasContent())
+    public List<ContinentDto> getContinentsList(Sort sorting) {
+        List<ContinentDto> data = continentRepository.fetchAllContinents(sorting);
+        if (data.isEmpty())
             throw new DataNotFoundException(null);
         return data;
     }

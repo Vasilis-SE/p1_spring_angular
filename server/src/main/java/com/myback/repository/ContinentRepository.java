@@ -1,9 +1,11 @@
 package com.myback.repository;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
+import java.util.List;
 
 import com.myback.dao.ContinentDao;
 import com.myback.dto.ContinentDto;
@@ -21,7 +23,7 @@ public interface ContinentRepository extends JpaRepository<ContinentDao, Integer
 
     // Fetch all continents from database
     @Query("SELECT new com.myback.dto.ContinentDto(c.continent_id, c.name) FROM ContinentDao c")
-    public Page<ContinentDto> fetchAllContinents(Pageable pagination);
+    public List<ContinentDto> fetchAllContinents(Sort sorting);
 
     // Fetch continent without regions by id
     @Query("SELECT new com.myback.dto.ContinentDto(c.continent_id, c.name) FROM ContinentDao c WHERE c.continent_id = ?1")
