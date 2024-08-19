@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import com.myback.exception.DataNotFoundException;
 import com.myback.exception.InvalidArgumentException;
 import com.myback.exception.UnhandledException;
 
@@ -21,17 +22,26 @@ public class GlobalRestControllerAdvice {
         logger.error("Exception thrown: " + e.toString());
 
         return ResponseEntity
-            .status(HttpStatus.BAD_REQUEST)
-            .body(e.toMap());
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.toMap());
     }
 
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<?> handleDataNotFoundException(DataNotFoundException e) {
+        logger.error("Exception thrown: " + e.toString());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(e.toMap());
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleUnhandledException(Exception e, WebRequest request) {
         logger.error("Unhandled exception thrown: " + e.toString());
 
         return ResponseEntity
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(new UnhandledException(null).toMap());
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new UnhandledException(null).toMap());
     }
+
 }

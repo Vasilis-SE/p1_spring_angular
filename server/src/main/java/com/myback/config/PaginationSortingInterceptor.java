@@ -16,6 +16,9 @@ public class PaginationSortingInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws InvalidArgumentException {
 
+        if(!request.getMethod().equals("GET"))
+            return true;
+
         String page = request.getParameter("page");
         String size = request.getParameter("size");
         // String sort = request.getParameter("sort");

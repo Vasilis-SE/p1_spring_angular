@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-@Data
 @Entity
 @Getter
 @Setter

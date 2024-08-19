@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class HttpResponseDto<T> {
-    private boolean status = true;
-    private Object data;
-    private PaginationMetadata pagination;
+public class PaginationMetadata {
+    private int pageNo;
+    private int pageSize;
+    private long totalElements;
+    private int totalPages;
+    private boolean isLastPage;
 }

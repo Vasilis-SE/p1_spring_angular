@@ -4,8 +4,13 @@ import java.util.List;
 import java.io.Serializable;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "continents")
 public class ContinentDao implements Serializable {
 
