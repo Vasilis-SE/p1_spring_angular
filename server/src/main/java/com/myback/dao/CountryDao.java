@@ -42,7 +42,9 @@ public class CountryDao {
     @Column(nullable = false)
     private int region_id;
 
-    @OneToMany(mappedBy="country_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
     private List<CountryStatsDao> statistics;
-    
+
+//     @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
+//     private List<CountryLanguageDao> languages;
 }

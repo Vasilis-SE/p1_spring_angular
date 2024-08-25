@@ -2,24 +2,27 @@ package com.myback.dao;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
 
+@Data
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @Table(name = "country_languages")
-@IdClass(CountryLanguageId.class)
 public class CountryLanguageDao {
-    
-    @Id
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = CountryDao.class)
-    @JoinColumn(name = "country_id")
-    private CountryDao country;
 
-    @Id
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = LanguagesDao.class)
-    @JoinColumn(name = "language_id")
+    @EmbeddedId
+    private CountryLanguageId id;
+
+    // @ManyToOne
+    // @JoinColumn(name = "country_id", insertable = false, updatable = false)
+    // private CountryDao country;
+
+    @ManyToOne
+    @JoinColumn(name = "language_id", insertable = false, updatable = false)
     private LanguagesDao language;
 
     @Column(nullable = false)

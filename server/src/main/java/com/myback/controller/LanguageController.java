@@ -14,8 +14,8 @@ import com.myback.service.LanguageService;
 @RequestMapping("/api/language")
 public class LanguageController {
 
-    @Autowired
-    private LanguageService languageService;
+    // @Autowired
+    // private LanguageService languageService;
 
     // @GetMapping()
     // public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {

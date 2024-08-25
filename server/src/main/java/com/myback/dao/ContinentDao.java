@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "continents")
-public class ContinentDao implements Serializable {
+public class ContinentDao implements Serializable  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

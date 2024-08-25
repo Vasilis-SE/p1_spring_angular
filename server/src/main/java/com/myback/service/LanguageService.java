@@ -17,25 +17,25 @@ public class LanguageService {
     @Autowired
     private CountryLanguageRepository countryLanguageRepository;
 
-    public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {
-        return countryLanguageRepository.findAll();
-    }
+    // public List<CountryLanguageDao> getAllCountryToLanguageCorrelations() {
+    //     return countryLanguageRepository.findAll();
+    // }
 
-    public LanguagesPerCountryDto getLanguagesByCountryId(int cid) {
-        List<CountryLanguageDao> countryToLangList = countryLanguageRepository.fetchLanguagesByCountryId(cid);
+    // public LanguagesPerCountryDto getLanguagesByCountryId(int cid) {
+    //     List<CountryLanguageDao> countryToLangList = countryLanguageRepository.fetchLanguagesByCountryId(cid);
 
-        List<LanguageForCountryDto> listOfLanguages = new ArrayList<LanguageForCountryDto>();
-        for (CountryLanguageDao cl : countryToLangList) {
-            listOfLanguages.add(new LanguageForCountryDto(
-                cl.getLanguage().getLanguage_id(), 
-                cl.getLanguage().getLanguage(), 
-                cl.getOfficial()));
-        }  
+    //     List<LanguageForCountryDto> listOfLanguages = new ArrayList<LanguageForCountryDto>();
+    //     for (CountryLanguageDao cl : countryToLangList) {
+    //         listOfLanguages.add(new LanguageForCountryDto(
+    //             cl.getLanguage().getLanguage_id(), 
+    //             cl.getLanguage().getLanguage(), 
+    //             cl.getOfficial()));
+    //     }  
 
-        return LanguagesPerCountryDto.builder()
-            .name(countryToLangList.get(0).getCountry().getName())
-            .languages(listOfLanguages)
-            .build();
-    }
+    //     return LanguagesPerCountryDto.builder()
+    //         .name(countryToLangList.get(0).getCountry().getName())
+    //         .languages(listOfLanguages)
+    //         .build();
+    // }
     
 }

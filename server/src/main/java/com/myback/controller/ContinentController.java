@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,8 @@ import com.myback.dto.HttpResponseDto;
 import com.myback.dto.RegionToStatsDto;
 import com.myback.exception.InvalidArgumentException;
 import com.myback.service.ContinentService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -48,6 +52,34 @@ public class ContinentController {
         ContinentDto data = continentService.getContinentById(id);
         return httpResponseBuilder.build(data);
     }
+
+    @PostMapping("/continent")
+    @ResponseStatus(HttpStatus.CREATED) 
+    public HttpResponseDto<ContinentDto> createNewContinent(@RequestBody @Valid ContinentDto newContinent, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors();
+            return ResponseEntity.badRequest().body("Validation failed");
+        }
+
+        ContinentDto data = continentService.createNewContinent(newContinent);
+        return httpResponseBuilder.build(data);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/continents/tree")
     @ResponseStatus(HttpStatus.OK)

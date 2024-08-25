@@ -1,5 +1,6 @@
 package com.myback.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -45,6 +46,27 @@ public class ContinentService {
             throw new DataNotFoundException(null);
         return data;
     }
+
+    public ContinentDto createNewContinent(ContinentDto newContinent) {
+        // if(newContinent == null)
+
+
+        ModelMapper modelMapper = new ModelMapper();
+        ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
+        
+        return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Service function that fetches a tree of data from continents, regions,
