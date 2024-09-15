@@ -9,6 +9,7 @@ spring:
     jpa: 
         hibernate:
             ddl-auto: none
+        open-in-view: true
 
 server: 
     port: ${APP_PORT}

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.myback.config.DotEnvConfiguration;
+import com.myback.shared.config.DotEnvConfiguration;
 
 
 
