@@ -11,7 +11,7 @@ public class DotEnvConfiguration {
     @Bean
     public Dotenv dotenv() {
         return Dotenv.configure()
-                     .directory("env")
+                     .directory("server/env")
                      .filename(".env")
                      .load();    
     }

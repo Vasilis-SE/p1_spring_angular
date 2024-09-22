@@ -17,14 +17,15 @@ public class WebConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry
+            .addMapping("/api/**")
+            .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
+            .allowedHeaders("*");
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(paginationSortingInterceptor)
-                .addPathPatterns("/api/v1/continents")
-                .addPathPatterns("/api/v1/continents/tree")
-                .addPathPatterns("/api/v1/continents/tree/min");
+                .addPathPatterns("/api/**");
     }
 }

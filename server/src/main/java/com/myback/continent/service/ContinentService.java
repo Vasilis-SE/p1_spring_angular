@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.myback.continent.dao.ContinentDao;
 import com.myback.continent.dto.ContinentDto;
+import com.myback.continent.dto.CreateContinentDto;
 import com.myback.continent.repository.ContinentRepository;
 import com.myback.shared.exceptions.DataNotFoundException;
 
@@ -46,10 +47,7 @@ public class ContinentService {
         return data;
     }
 
-    public ContinentDto createNewContinent(ContinentDto newContinent) {
-        // if(newContinent == null)
-
-
+    public ContinentDto createNewContinent(CreateContinentDto newContinent) {
         ModelMapper modelMapper = new ModelMapper();
         ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
         
