@@ -9,7 +9,6 @@ import com.myback.continent.dao.ContinentDao;
 import com.myback.continent.dto.ContinentDto;
 import com.myback.continent.repository.ContinentRepository;
 import com.myback.shared.exceptions.DataNotFoundException;
-import com.myback.stats.dto.StatsPerCountryDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,20 +67,7 @@ public class ContinentService {
 
 
 
-    /**
-     * Service function that fetches a tree of data from continents, regions,
-     * countries and stats.
-     * 
-     * @param pagination A pageable object containing the size, page and sorting
-     *                   method to apply on the SQL search.
-     * @return A list of object containing all the necessary information.
-     */
-    public Page<StatsPerCountryDto> getContinentsTreeWithStatsMin(Pageable pagination) {
-        Page<StatsPerCountryDto> data = continentRepository.fetchRegionToStatsDataMinified(pagination);
-        if (!data.hasContent())
-            throw new DataNotFoundException(null);
-        return data;
-    }
+
 
     public Page<ContinentDao> getContinentsTree(Pageable pagination) {
         Page<ContinentDao> data = continentRepository.findAll(pagination);

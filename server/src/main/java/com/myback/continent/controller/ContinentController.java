@@ -18,7 +18,6 @@ import com.myback.shared.config.HttpResponseBuilder;
 import com.myback.shared.dto.HttpResponseDto;
 import com.myback.shared.exceptions.InvalidArgumentException;
 import com.myback.shared.exceptions.ValidationException;
-import com.myback.stats.dto.StatsPerCountryDto;
 
 import jakarta.validation.Valid;
 
@@ -99,24 +98,6 @@ public class ContinentController {
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto<ContinentDao> getContinentTreeById(int id) {
         ContinentDao data = continentService.getContinentTreeById(id);
-        return httpResponseBuilder.build(data);
-    }
-
-    @GetMapping("/continents/tree/min")
-    @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto<List<StatsPerCountryDto>> getContinentsTreeWithStatsMin(
-            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-            @RequestParam(value = "sort", defaultValue = "continent_name", required = false) String sort,
-            @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir)
-            throws InvalidArgumentException {
-        Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sort).ascending()
-                : Sort.by(sort).descending();
-
-        Pageable pagination = PageRequest.of(page, size, sorting);
-
-        Page<StatsPerCountryDto> data = continentService.getContinentsTreeWithStatsMin(pagination);
         return httpResponseBuilder.build(data);
     }
 
