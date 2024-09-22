@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -18,7 +17,6 @@ import com.myback.continent.service.ContinentService;
 import com.myback.shared.config.HttpResponseBuilder;
 import com.myback.shared.dto.HttpResponseDto;
 import com.myback.shared.exceptions.InvalidArgumentException;
-import com.myback.shared.exceptions.ValidationException;
 
 import jakarta.validation.Valid;
 
@@ -54,8 +52,7 @@ public class ContinentController {
 
     @PostMapping("/continent")
     @ResponseStatus(HttpStatus.CREATED) 
-    public HttpResponseDto<ContinentDto> createNewContinent(@Valid @RequestBody CreateContinentDto newContinent, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) throw new ValidationException(null, bindingResult.getAllErrors());
+    public HttpResponseDto<ContinentDto> createNewContinent(@Valid @RequestBody CreateContinentDto newContinent) {
         ContinentDto data = continentService.createNewContinent(newContinent);
         return httpResponseBuilder.build(data);
     }

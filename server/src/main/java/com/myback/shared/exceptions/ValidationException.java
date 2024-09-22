@@ -2,20 +2,19 @@ package com.myback.shared.exceptions;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.validation.ObjectError;
+import com.myback.shared.dto.ValidationErrorDto;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Getter
 @Setter
 public class ValidationException extends CustomException {
-    private List<ObjectError> errors;
+    private List<ValidationErrorDto> errors;
 
-    public ValidationException(String m, List<ObjectError> err) {
+    public ValidationException(String m, List<ValidationErrorDto> err) {
         super("Error occurred while validating data...", ValidationException.class.getSimpleName());
         this.errors = err;
     }
