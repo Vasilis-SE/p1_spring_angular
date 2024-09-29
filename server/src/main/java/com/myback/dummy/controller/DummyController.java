@@ -25,17 +25,15 @@ import com.myback.shared.exceptions.InvalidArgumentException;
 @RequestMapping("/api/v1/dummy")
 @Profile("development")
 public class DummyController {
-    
+
     @Autowired
     private HttpResponseBuilder httpResponseBuilder;
 
     @Autowired
     private DummyService dummyService;
 
-
     @GetMapping("/continents/tree")
     @ResponseStatus(HttpStatus.OK)
-    // TODO: Migrate this to a different controller called `dummy` that only runs on development environment
     public HttpResponseDto<List<ContinentDao>> getContinentsTree(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
             @RequestParam(name = "size", defaultValue = "2", required = false) Integer size,
@@ -54,11 +52,9 @@ public class DummyController {
 
     @GetMapping("/continents/tree/{id}")
     @ResponseStatus(HttpStatus.OK)
-    // TODO: Migrate this to a different controller called `dummy` that only runs on development environment
     public HttpResponseDto<ContinentDao> getContinentTreeById(int id) {
         ContinentDao data = dummyService.getContinentTreeById(id);
         return httpResponseBuilder.build(data);
     }
-
 
 }

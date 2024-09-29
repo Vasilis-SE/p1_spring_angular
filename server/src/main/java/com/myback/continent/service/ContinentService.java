@@ -9,6 +9,7 @@ import com.myback.continent.dao.ContinentDao;
 import com.myback.continent.dto.ContinentDto;
 import com.myback.continent.dto.CreateContinentDto;
 import com.myback.continent.repository.ContinentRepository;
+import com.myback.shared.exceptions.DataExists;
 import com.myback.shared.exceptions.DataNotFoundException;
 
 import org.springframework.data.domain.Sort;
@@ -45,11 +46,18 @@ public class ContinentService {
         return data;
     }
 
+    /**
+     * Service function that creates a new continent entity with given data.
+     * 
+     * @param newContinent The new continent that will be created.
+     * @return The newly created continent. 
+     */
     public ContinentDto createNewContinent(CreateContinentDto newContinent) {
         ModelMapper modelMapper = new ModelMapper();
         ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
 
-        // TODO: check if the continent already exists
+        if (continentRepository.fetchContinentByName(continentDao.getName()).isPresent())
+            throw new DataExists(null);
 
         return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);
     }

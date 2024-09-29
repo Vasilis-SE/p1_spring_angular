@@ -25,6 +25,7 @@ public class ValidationException extends CustomException {
                 this.getMessage(), this.getException(), this.errors.toString());
     }
 
+    @Override
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
 

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import com.myback.shared.dto.ValidationErrorDto;
+import com.myback.shared.exceptions.CustomException;
+import com.myback.shared.exceptions.DataExists;
 import com.myback.shared.exceptions.DataNotFoundException;
 import com.myback.shared.exceptions.InvalidArgumentException;
 import com.myback.shared.exceptions.UnhandledException;
@@ -24,15 +26,6 @@ public class GlobalRestControllerAdvice {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalRestControllerAdvice.class);
 
-    @ExceptionHandler(InvalidArgumentException.class)
-    public ResponseEntity<?> handleIllegalArgumentException(InvalidArgumentException e) {
-        logger.error("Exception thrown: " + e.toString());
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(e.toMap());
-    }
-
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<?> handleDataNotFoundException(DataNotFoundException e) {
         logger.error("Exception thrown: " + e.toString());
@@ -42,8 +35,17 @@ public class GlobalRestControllerAdvice {
                 .body(e.toMap());
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<?> handleValidationException(ValidationException e) {
+    @ExceptionHandler(DataExists.class)
+    public ResponseEntity<?> handleDataExists(DataExists e) {
+        logger.error("Exception thrown: " + e.toString());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_ACCEPTABLE)
+                .body(e.toMap());
+    }
+
+    @ExceptionHandler({InvalidArgumentException.class})
+    public ResponseEntity<?> handleBasicBadRequests(CustomException e) {
         logger.error("Exception thrown: " + e.toString());
 
         return ResponseEntity

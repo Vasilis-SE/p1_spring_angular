@@ -18,8 +18,8 @@ import lombok.*;
 public class ContinentDao implements Serializable  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = true, insertable = false)
     private int continent_id;
 
     @Column(nullable = false)

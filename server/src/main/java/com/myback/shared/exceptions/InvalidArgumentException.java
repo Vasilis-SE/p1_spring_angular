@@ -25,7 +25,8 @@ public class InvalidArgumentException extends CustomException {
         return String.format("{ message: %s, exception: %s, argument: %s, value: %s, expected: %s}", 
             this.getMessage(), this.getException(), this.getArgument(), this.getValue(), this.getExpected());
     }
-
+    
+    @Override
     public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>(); 
         map.put("message", this.getMessage());
