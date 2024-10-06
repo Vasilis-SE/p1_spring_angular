@@ -23,10 +23,10 @@ public class StatsService {
      *                   method to apply on the SQL search.
      * @return A list of object containing all the necessary information.
      */
-    // public Page<StatsPerCountryDto> getStatsPerCountry(Pageable pagination) {
-    //     Page<StatsPerCountryDto> data = statsRepository.fetchStatsPerCountry(pagination);
-    //     if (!data.hasContent())
-    //         throw new DataNotFoundException(null);
-    //     return data;
-    // }
+    public Page<StatsPerCountryDto> getStatsPerCountry(Pageable pagination) {
+        Page<StatsPerCountryDto> data = statsRepository.fetchStatsPerCountry(pagination);
+        if (!data.hasContent())
+            throw new DataNotFoundException(null);
+        return data;
+    }
 }

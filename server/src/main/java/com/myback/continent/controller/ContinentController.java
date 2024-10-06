@@ -38,21 +38,21 @@ public class ContinentController {
         return httpResponseBuilder.build(data);
     }
 
-    // @GetMapping("/continent/{id}")
-    // @ResponseStatus(HttpStatus.OK)
-    // public HttpResponseDto<ContinentDto> getContinentById(@PathVariable int id) {
-    //     return httpResponseBuilder.build(continentService.getContinentById(id));
-    // }
+    @GetMapping("/continent/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto<ContinentDto> getContinentById(@PathVariable int id) {
+        return httpResponseBuilder.build(continentService.getContinentById(id));
+    }
 
-    // @PostMapping("/continent")
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public HttpResponseDto<ContinentDto> createNewContinent(@Valid @RequestBody CreateContinentDto newContinent) {
-    //     return httpResponseBuilder.build(continentService.createNewContinent(newContinent));
-    // }
+    @PostMapping("/continent")
+    @ResponseStatus(HttpStatus.CREATED)
+    public HttpResponseDto<ContinentDto> createNewContinent(@Valid @RequestBody CreateContinentDto newContinent) {
+        return httpResponseBuilder.build(continentService.createNewContinent(newContinent));
+    }
 
-    // @DeleteMapping("/continent/{id}")
-    // @ResponseStatus(HttpStatus.OK)
-    // public HttpResponseDto<ContinentDto> deleteContinent(@PathVariable int id) {
-    //     return httpResponseBuilder.build(continentService.deleteContinent(id));
-    // }
+    @DeleteMapping("/continent/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto<ContinentDto> deleteContinent(@PathVariable int id) {
+        return httpResponseBuilder.build(continentService.deleteContinent(id));
+    }
 }

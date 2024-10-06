@@ -33,50 +33,57 @@ public class ContinentService {
      */
     public List<ContinentDto> getContinentsList(Sort sorting) {
         List<ContinentDao> data = continentRepository.findAll(sorting);
-        if (data.isEmpty()) throw new DataNotFoundException(null);
+        if (data.isEmpty())
+            throw new DataNotFoundException(null);
 
         return data.stream()
-            .map(continent -> modelMapper.map(continent, ContinentDto.class))
-            .collect(Collectors.toList());
+                .map(continent -> modelMapper.map(continent, ContinentDto.class))
+                .collect(Collectors.toList());
     }
 
-    // /**
-    //  * Service function which fetches a single continent based on a given continent
-    //  * id.
-    //  * 
-    //  * @param id The continent id.
-    //  * @return A continent object containing all the related continent data.
-    //  */
-    // public ContinentDto getContinentById(int id) {
-    //     Optional<ContinentDto> data = continentRepository.fetchContinentById(id);
-    //     if (!data.isPresent())
-    //         throw new DataNotFoundException(null);
+    /**
+     * Service function which fetches a single continent based on a given continent
+     * id.
+     * 
+     * @param id The continent id.
+     * @return A continent object containing all the related continent data.
+     */
+    public ContinentDto getContinentById(int id) {
+        Optional<ContinentDao> data = continentRepository.findById(id);
+        if (!data.isPresent())
+            throw new DataNotFoundException(null);
 
-    //     // return modelMapper.map(data.get(), ContinentDto.class);
-    //     return modelMapper.map(data.get(), ContinentDto.class);
-    // }
+        return modelMapper.map(data.get(), ContinentDto.class);
+    }
 
-    // /**
-    //  * Service function that creates a new continent entity with given data.
-    //  * 
-    //  * @param newContinent The new continent that will be created.
-    //  * @return The newly created continent.
-    //  */
-    // public ContinentDto createNewContinent(CreateContinentDto newContinent) {
-    //     ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
+    /**
+     * Service function that creates a new continent entity with given data.
+     * 
+     * @param newContinent The new continent that will be created.
+     * @return The newly created continent.
+     */
+    public ContinentDto createNewContinent(CreateContinentDto newContinent) {
+        ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
 
-    //     if (continentRepository.fetchContinentByName(continentDao.getName()).isPresent())
-    //         throw new DataExistsException(null);
+        if (continentRepository.fetchContinentByName(continentDao.getName()).isPresent())
+            throw new DataExistsException(null);
 
-    //     return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);
-    // }
+        return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);
+    }
 
-    // public ContinentDto deleteContinent(int id) {
-    //     Optional<ContinentDto> storedContinent = continentRepository.fetchContinentById(id);
-    //     if (!storedContinent.isPresent())
-    //         throw new DataNotFoundException(null);
-    //     continentRepository.delete(storedContinent.get());
-    //     return modelMapper.map(storedContinent.get(), ContinentDto.class);
-    // }
+    /**
+     * Service function that deletes a continent with a given continent id.
+     * 
+     * @param id The provided continent id.
+     * @return The deleted continent entity.
+     */
+    public ContinentDto deleteContinent(int id) {
+        Optional<ContinentDao> storedContinent = continentRepository.findById(id);
+        if (!storedContinent.isPresent())
+            throw new DataNotFoundException(null);
+
+        continentRepository.deleteById(storedContinent.get().getContinent_id());
+        return modelMapper.map(storedContinent.get(), ContinentDto.class);
+    }
 
 }
