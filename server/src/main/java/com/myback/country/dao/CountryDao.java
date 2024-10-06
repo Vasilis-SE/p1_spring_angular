@@ -6,19 +6,19 @@ import java.util.List;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.myback.language.dao.CountryLanguageDao;
 import com.myback.region.dao.RegionDao;
 import com.myback.stats.dao.StatsDao;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.Accessors;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(chain = true)
 @Table(name = "countries")
 public class CountryDao {
     
@@ -48,9 +48,11 @@ public class CountryDao {
     @JoinColumn(name="region_id")
     private RegionDao region;
 
-    // @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
-    // private List<StatsDao> statistics;
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="country", fetch = FetchType.LAZY)
+    private List<StatsDao> statistics;
 
-//     @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
-//     private List<CountryLanguageDao> languages;
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="country", fetch = FetchType.LAZY)
+    private List<CountryLanguageDao> country_languages;
 }

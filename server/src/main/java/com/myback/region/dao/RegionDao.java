@@ -3,7 +3,6 @@ package com.myback.region.dao;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.myback.continent.dao.ContinentDao;
 import com.myback.country.dao.CountryDao;

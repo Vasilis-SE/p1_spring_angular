@@ -1,5 +1,8 @@
 package com.myback.stats.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.myback.country.dao.CountryDao;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -14,9 +17,10 @@ import lombok.experimental.Accessors;
 @Table(name = "country_stats")
 public class StatsDao {
     
-    @Id
-    @Column(nullable = false)
-    private int country_id;
+    @ManyToOne
+    @JsonBackReference    
+    @JoinColumn(name="country_id")
+    private CountryDao country;
 
     @Id
     @Column(nullable = false)
