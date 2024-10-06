@@ -5,11 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DataExists extends CustomException {
+public class DataExistsException extends CustomException {
 
-    public DataExists(String m) {
+    public DataExistsException(String m) {
         super((m != null && !m.isEmpty()) ? m : "Data already exists!",
-                DataExists.class.getSimpleName());
+                DataExistsException.class.getSimpleName());
     }
 
 }

@@ -36,7 +36,7 @@ public class DummyController {
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto<List<ContinentDao>> getContinentsTree(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "2", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "1", required = false) Integer size,
             @RequestParam(value = "sort", defaultValue = "name", required = false) String sort,
             @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir)
             throws InvalidArgumentException {

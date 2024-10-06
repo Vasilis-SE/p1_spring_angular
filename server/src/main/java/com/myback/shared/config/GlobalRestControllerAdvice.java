@@ -15,7 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.myback.shared.dto.ValidationErrorDto;
 import com.myback.shared.exceptions.CustomException;
-import com.myback.shared.exceptions.DataExists;
+import com.myback.shared.exceptions.DataExistsException;
 import com.myback.shared.exceptions.DataNotFoundException;
 import com.myback.shared.exceptions.InvalidArgumentException;
 import com.myback.shared.exceptions.UnhandledException;
@@ -35,8 +35,8 @@ public class GlobalRestControllerAdvice {
                 .body(e.toMap());
     }
 
-    @ExceptionHandler(DataExists.class)
-    public ResponseEntity<?> handleDataExists(DataExists e) {
+    @ExceptionHandler(DataExistsException.class)
+    public ResponseEntity<?> handleDataExistsException(DataExistsException e) {
         logger.error("Exception thrown: " + e.toString());
 
         return ResponseEntity

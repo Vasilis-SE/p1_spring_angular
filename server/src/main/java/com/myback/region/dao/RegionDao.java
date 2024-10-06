@@ -2,6 +2,10 @@ package com.myback.region.dao;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.myback.continent.dao.ContinentDao;
 import com.myback.country.dao.CountryDao;
 
 import jakarta.persistence.*;
@@ -14,7 +18,7 @@ import lombok.*;
 @NoArgsConstructor
 @Table(name = "regions")
 public class RegionDao {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -23,10 +27,13 @@ public class RegionDao {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int continent_id;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "continent_id")
+    private ContinentDao continent;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="region_id", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "region", fetch = FetchType.LAZY)
     private List<CountryDao> countries;
-    
+
 }

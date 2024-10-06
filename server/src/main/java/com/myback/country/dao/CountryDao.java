@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.myback.region.dao.RegionDao;
 import com.myback.stats.dao.StatsDao;
 
 import jakarta.persistence.*;
@@ -41,11 +43,13 @@ public class CountryDao {
     @Column(nullable = false)
     private String country_code3;
 
-    @Column(nullable = false)
-    private int region_id;
+    @ManyToOne
+    @JsonBackReference    
+    @JoinColumn(name="region_id")
+    private RegionDao region;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
-    private List<StatsDao> statistics;
+    // @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
+    // private List<StatsDao> statistics;
 
 //     @OneToMany(cascade = CascadeType.ALL, mappedBy="country_id", fetch = FetchType.LAZY)
 //     private List<CountryLanguageDao> languages;

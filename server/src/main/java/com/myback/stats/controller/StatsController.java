@@ -30,21 +30,21 @@ public class StatsController {
     @Autowired
     private HttpResponseBuilder httpResponseBuilder;
 
-    @GetMapping("/stats/percountry")
-    @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto<List<StatsPerCountryDto>> getStatsPerCountry(
-            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
-            @RequestParam(value = "sort", defaultValue = "continent_name", required = false) String sort,
-            @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir)
-            throws InvalidArgumentException {
-        Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(sort).ascending()
-                : Sort.by(sort).descending();
+    // @GetMapping("/stats/percountry")
+    // @ResponseStatus(HttpStatus.OK)
+    // public HttpResponseDto<List<StatsPerCountryDto>> getStatsPerCountry(
+    //         @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+    //         @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+    //         @RequestParam(value = "sort", defaultValue = "continent_name", required = false) String sort,
+    //         @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir)
+    //         throws InvalidArgumentException {
+    //     Sort sorting = dir.equalsIgnoreCase(Sort.Direction.ASC.name())
+    //             ? Sort.by(sort).ascending()
+    //             : Sort.by(sort).descending();
 
-        Pageable pagination = PageRequest.of(page, size, sorting);
+    //     Pageable pagination = PageRequest.of(page, size, sorting);
 
-        Page<StatsPerCountryDto> data = statsService.getStatsPerCountry(pagination);
-        return httpResponseBuilder.build(data);
-    }
+    //     Page<StatsPerCountryDto> data = statsService.getStatsPerCountry(pagination);
+    //     return httpResponseBuilder.build(data);
+    // }
 }

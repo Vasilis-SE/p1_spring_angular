@@ -2,9 +2,8 @@ package com.myback.continent.dao;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.myback.region.dao.RegionDao;
-
-import java.io.Serializable;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +14,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "continents")
-public class ContinentDao implements Serializable  {
+public class ContinentDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +24,8 @@ public class ContinentDao implements Serializable  {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "continent_id", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "continent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RegionDao> regions;
 
 }
