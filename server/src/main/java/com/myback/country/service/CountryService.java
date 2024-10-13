@@ -1,48 +1,55 @@
 package com.myback.country.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.myback.country.dao.CountryDao;
 import com.myback.country.dto.CountryDto;
+import com.myback.country.dto.CreateCountryDto;
 import com.myback.country.repository.CountryRepository;
-import com.myback.stats.dto.CountryMaxGdpStatDto;
-
-import jakarta.persistence.Tuple;
+import com.myback.shared.exceptions.DataNotFoundException;
 
 @Service
 public class CountryService {
-    
+
     @Autowired
     private CountryRepository countryRepository;
 
-    public List<CountryDto> getAllCountries() {
-        return countryRepository.getAllCountries();
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public List<CountryDto> getAllCountries(Sort sorting) {
+        List<CountryDao> data = countryRepository.findAll(sorting);
+        if (data.isEmpty())
+            throw new DataNotFoundException(null);
+
+        return data.stream()
+                .map(country -> modelMapper.map(country, CountryDto.class))
+                .collect(Collectors.toList());
     }
 
-    public List<CountryDao> getAllCountriesWithStats() {
-        return countryRepository.findAll();
+    public CountryDto getCountryById(Integer id) {
+        Optional<CountryDao> data = countryRepository.findById(id);
+        if (!data.isPresent())
+            throw new DataNotFoundException(null);
+
+        return modelMapper.map(data.get(), CountryDto.class);
     }
 
-    public List<CountryMaxGdpStatDto> getAllCountriesAndTheirMaxGdp() {
-        List<Tuple> maxGdpResults = countryRepository.getCountriesAndTheirMaxGdp();
-        
-        List<CountryMaxGdpStatDto> countryMaxGdpList = new ArrayList<CountryMaxGdpStatDto>();
-        for (Tuple row : maxGdpResults){
-            countryMaxGdpList.add(CountryMaxGdpStatDto.builder()
-                .name((String) row.get(0))
-                .country_code3((String) row.get(1))
-                .year((int) (row.get(2) != null ? row.get(2) : 0))
-                .population((int) (row.get(3) != null ? row.get(3) : 0))
-                .gdp((BigDecimal) (row.get(4) != null ? row.get(4) : new BigDecimal(0)))
-                .build());
-        }
+    // public CountryDto createNewCountry(CreateCountryDto newCountry) {
+    //     CountryDao countryDao = modelMapper.map(newCountry, CountryDao.class);
 
-        return countryMaxGdpList;
-    }
-    
+    //     if(countryDao)
+
+    //     // TODO: check if region with the id provided exists
+    //     // TODO: check if country exists with the given name.
+    //     // TODO: save new country
+    // }
+
 }
