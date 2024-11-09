@@ -20,8 +20,8 @@ public class RegionDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private int region_id;
+    @Column(name = "region_id", nullable = false)
+    private int regionId;
 
     @Column(nullable = false)
     private String name;
@@ -35,8 +35,8 @@ public class RegionDao {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region", fetch = FetchType.LAZY)
     private List<CountryDao> countries;
 
-    public RegionDao(int region_id, String name) {
-        this.region_id = region_id;
-        this.name = name;
-    }
+    // public RegionDao(int region_id, String name) {
+    //     this.regionId = region_id;
+    //     this.name = name;
+    // }
 }

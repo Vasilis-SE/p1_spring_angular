@@ -58,7 +58,7 @@ public class ContinentService {
         if (!storedContinent.isPresent())
             throw new DataNotFoundException(null);
 
-        continentRepository.deleteById(storedContinent.get().getContinent_id());
+        continentRepository.deleteById(storedContinent.get().getContinentId());
         return modelMapper.map(storedContinent.get(), ContinentDto.class);
     }
 

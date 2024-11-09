@@ -24,8 +24,8 @@ public class CountryDao {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false)
-    private int country_id;
+    @Column(name = "country_id", nullable = false)
+    private int countryId;
     
     @Column(nullable = true)
     private String name;
@@ -33,15 +33,15 @@ public class CountryDao {
     @Column(nullable = false)
     private int area;
 
-    @Column(nullable = true)
+    @Column(name = "national_day", nullable = true)
     @CreatedDate
-    private Date national_day;
+    private Date nationalDay;
 
-    @Column(nullable = false)
-    private String country_code2;
+    @Column(name = "country_code2", nullable = false)
+    private String countryCode2;
 
-    @Column(nullable = false)
-    private String country_code3;
+    @Column(name = "country_code3", nullable = false)
+    private String countryCode3;
 
     @ManyToOne
     @JsonBackReference    

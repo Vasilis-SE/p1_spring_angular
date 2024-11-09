@@ -18,8 +18,8 @@ public class ContinentDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = true, insertable = false)
-    private int continent_id;
+    @Column(name = "continent_id", nullable = true, insertable = false)
+    private int continentId;
 
     @Column(nullable = false)
     private String name;
