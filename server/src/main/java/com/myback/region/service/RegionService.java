@@ -1,6 +1,7 @@
 package com.myback.region.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -8,13 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.myback.continent.dao.ContinentDao;
+import com.myback.continent.repository.ContinentRepository;
 import com.myback.region.dao.RegionDao;
+import com.myback.region.dto.CreateRegionDto;
 import com.myback.region.dto.RegionDto;
 import com.myback.region.repository.RegionRepository;
+import com.myback.shared.exceptions.DataExistsException;
 import com.myback.shared.exceptions.DataNotFoundException;
 
 @Service
 public class RegionService {
+
+    @Autowired
+    private ContinentRepository continentRepository;
 
     @Autowired
     private RegionRepository regionRepository;
@@ -30,6 +38,33 @@ public class RegionService {
         return data.stream()
                 .map(region -> modelMapper.map(region, RegionDto.class))
                 .collect(Collectors.toList());
+    }
+
+    public RegionDto getRegionById(Integer id) {
+        Optional<RegionDao> data = regionRepository.findById(id);
+        if (!data.isPresent())
+            throw new DataNotFoundException(null);
+
+        return modelMapper.map(data.get(), RegionDto.class);
+    }
+
+    public RegionDto createNewRegion(CreateRegionDto createRegionDto) {
+        Optional<ContinentDao> continent = continentRepository.findById(createRegionDto.getContinent_id());
+        if (!continent.isPresent())
+            throw new DataNotFoundException(null);
+
+        if (regionRepository.findByName(createRegionDto.getName()).isPresent())
+            throw new DataExistsException(null);
+
+        // createRegionDto.setContinent_id(null);
+        RegionDao newRegion = modelMapper.map(createRegionDto, RegionDao.class);
+        // RegionDao newRegion = RegionDao.builder()
+        //     .name(createRegionDto.getName())
+        //     .continent(continent.get())
+        //     .build();
+
+
+        return modelMapper.map(regionRepository.save(newRegion), RegionDto.class);
     }
 
 }

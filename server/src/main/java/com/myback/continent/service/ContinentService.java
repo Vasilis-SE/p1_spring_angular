@@ -26,11 +26,6 @@ public class ContinentService {
     @Autowired
     private ModelMapper modelMapper;
 
-    /**
-     * Service function that fetches all the available continents from the database.
-     * 
-     * @return A list of continents.
-     */
     public List<ContinentDto> getContinentsList(Sort sorting) {
         List<ContinentDao> data = continentRepository.findAll(sorting);
         if (data.isEmpty())
@@ -41,13 +36,6 @@ public class ContinentService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Service function which fetches a single continent based on a given continent
-     * id.
-     * 
-     * @param id The continent id.
-     * @return A continent object containing all the related continent data.
-     */
     public ContinentDto getContinentById(int id) {
         Optional<ContinentDao> data = continentRepository.findById(id);
         if (!data.isPresent())
@@ -56,12 +44,6 @@ public class ContinentService {
         return modelMapper.map(data.get(), ContinentDto.class);
     }
 
-    /**
-     * Service function that creates a new continent entity with given data.
-     * 
-     * @param newContinent The new continent that will be created.
-     * @return The newly created continent.
-     */
     public ContinentDto createNewContinent(CreateContinentDto newContinent) {
         ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
 
@@ -71,12 +53,6 @@ public class ContinentService {
         return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);
     }
 
-    /**
-     * Service function that deletes a continent with a given continent id.
-     * 
-     * @param id The provided continent id.
-     * @return The deleted continent entity.
-     */
     public ContinentDto deleteContinent(int id) {
         Optional<ContinentDao> storedContinent = continentRepository.findById(id);
         if (!storedContinent.isPresent())

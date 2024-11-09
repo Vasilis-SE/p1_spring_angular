@@ -35,4 +35,8 @@ public class RegionDao {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region", fetch = FetchType.LAZY)
     private List<CountryDao> countries;
 
+    public RegionDao(int region_id, String name) {
+        this.region_id = region_id;
+        this.name = name;
+    }
 }

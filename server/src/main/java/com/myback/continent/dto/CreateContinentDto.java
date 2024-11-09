@@ -10,8 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 public class CreateContinentDto {
 
-    @NotBlank(message = "This value cannot be empty.")
-    @Size(min = 3, max = 20, message = "The value must be between 3 and 20 characters.")
+    @NotBlank(message = "This value cannot be empty")
+    @Size(min = 3, max = 20, message = "The value must be between 3 and 20 characters")
     private String name;
     
 }
