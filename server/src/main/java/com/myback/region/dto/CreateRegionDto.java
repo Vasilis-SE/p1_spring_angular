@@ -14,7 +14,7 @@ public class CreateRegionDto {
 
     @NotNull(message = "This value cannot be null")
     @Min(value = 1, message = "This field must contain a positive continent id")
-    private Integer continent_id;
+    private Integer continentId;
 
     @NotBlank(message = "Region name cannot be empty")
     @Size(min = 3, max = 100, message = "The size of the region name should be between 3 and 100 characters long")

@@ -47,7 +47,7 @@ public class ContinentService {
     public ContinentDto createNewContinent(CreateContinentDto newContinent) {
         ContinentDao continentDao = modelMapper.map(newContinent, ContinentDao.class);
 
-        if (continentRepository.fetchContinentByName(continentDao.getName()).isPresent())
+        if (continentRepository.findByName(continentDao.getName()).isPresent())
             throw new DataExistsException(null);
 
         return modelMapper.map(continentRepository.save(continentDao), ContinentDto.class);

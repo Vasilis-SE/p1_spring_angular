@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContinentDto {
-    private int continent_id;
+    private int continentId;
     private String name;
 }

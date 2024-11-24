@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,6 +57,12 @@ public class RegionController {
     @ResponseStatus(HttpStatus.CREATED)
     public HttpResponseDto<RegionDto> createNewRegion(@Valid @RequestBody CreateRegionDto newRegion) {
         return httpResponseBuilder.build(regionService.createNewRegion(newRegion));
+    }
+
+    @DeleteMapping("/region/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto<RegionDto> deleteRegion(@PathVariable int id) {
+        return httpResponseBuilder.build(regionService.deleteRegion(id));
     }
 
 }

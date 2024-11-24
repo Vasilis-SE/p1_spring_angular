@@ -19,8 +19,8 @@ import lombok.*;
 public class RegionDao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "region_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "region_id", nullable = false, updatable = false)
     private int regionId;
 
     @Column(nullable = false)
@@ -35,8 +35,4 @@ public class RegionDao {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "region", fetch = FetchType.LAZY)
     private List<CountryDao> countries;
 
-    // public RegionDao(int region_id, String name) {
-    //     this.regionId = region_id;
-    //     this.name = name;
-    // }
 }

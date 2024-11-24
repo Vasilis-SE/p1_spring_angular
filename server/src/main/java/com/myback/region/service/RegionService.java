@@ -49,22 +49,26 @@ public class RegionService {
     }
 
     public RegionDto createNewRegion(CreateRegionDto createRegionDto) {
-        Optional<ContinentDao> continent = continentRepository.findById(createRegionDto.getContinent_id());
+        Optional<ContinentDao> continent = continentRepository.findById(createRegionDto.getContinentId());
         if (!continent.isPresent())
             throw new DataNotFoundException(null);
 
         if (regionRepository.findByName(createRegionDto.getName()).isPresent())
             throw new DataExistsException(null);
 
-        // createRegionDto.setContinent_id(null);
         RegionDao newRegion = modelMapper.map(createRegionDto, RegionDao.class);
-        // RegionDao newRegion = RegionDao.builder()
-        //     .name(createRegionDto.getName())
-        //     .continent(continent.get())
-        //     .build();
-
+        newRegion.setContinent(continent.get());
 
         return modelMapper.map(regionRepository.save(newRegion), RegionDto.class);
+    }
+
+    public RegionDto deleteRegion(int id) {
+        Optional<RegionDao> storedRegion = regionRepository.findById(id);
+        if (!storedRegion.isPresent())
+            throw new DataNotFoundException(null);
+
+        regionRepository.deleteById(storedRegion.get().getRegionId());
+        return modelMapper.map(storedRegion.get(), RegionDto.class);
     }
 
 }
