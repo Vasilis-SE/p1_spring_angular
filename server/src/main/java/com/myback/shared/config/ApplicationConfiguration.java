@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.myback.continent.dao.ContinentDao;
 import com.myback.continent.dto.CreateContinentDto;
+import com.myback.country.dao.CountryDao;
+import com.myback.country.dto.CreateCountryDto;
 import com.myback.region.dao.RegionDao;
 import com.myback.region.dto.CreateRegionDto;
 
@@ -25,6 +27,7 @@ public class ApplicationConfiguration {
 
         this.continentMappings();
         this.regionMappings();
+        this.countryMappings();
 
         return modelMapper;
     }
@@ -37,6 +40,11 @@ public class ApplicationConfiguration {
     private void regionMappings() {
         modelMapper.typeMap(CreateRegionDto.class, RegionDao.class)
                 .addMappings(mapper -> mapper.skip(RegionDao::setRegionId));
+    }
+
+    private void countryMappings() {
+        modelMapper.typeMap(CreateCountryDto.class, CountryDao.class)
+                .addMappings(mapper -> mapper.skip(CountryDao::setCountryId));
     }
 
 }

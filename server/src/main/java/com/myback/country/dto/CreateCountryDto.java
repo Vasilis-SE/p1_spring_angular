@@ -3,7 +3,9 @@ package com.myback.country.dto;
 import java.sql.Date;
 
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -13,7 +15,9 @@ import lombok.*;
 @NoArgsConstructor
 public class CreateCountryDto {
 
-    private Integer region_id;
+    @NotNull(message = "This value cannot be null")
+    @Min(value = 1, message = "This field must contain a positive continent id")
+    private Integer regionId;
 
     @NotBlank(message = "This value cannot be empty.")
     @Max(value = 50, message = "The country name cannot exceed 50 characters in length.")

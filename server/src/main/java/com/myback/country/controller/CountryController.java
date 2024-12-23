@@ -3,6 +3,8 @@ package com.myback.country.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +17,8 @@ import com.myback.shared.dto.HttpResponseDto;
 
 import jakarta.validation.Valid;
 
-
 @RestController
-@RequestMapping("/api/country")
+@RequestMapping("/api/v1")
 public class CountryController {
 
     @Autowired
@@ -26,9 +27,11 @@ public class CountryController {
     @Autowired
     private HttpResponseBuilder httpResponseBuilder;
 
-    @GetMapping("/continents")
+    @GetMapping("/countries")
     @ResponseStatus(HttpStatus.OK)
-    public HttpResponseDto<List<CountryDto>> getAllCountries(
+    public HttpResponseDto<List<CountryDto>> getCountriesList(
+            @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
             @RequestParam(value = "sort", defaultValue = "name", required = false) String sort,
             @RequestParam(value = "dir", defaultValue = "asc", required = false) String dir) {
 
@@ -36,21 +39,27 @@ public class CountryController {
                 ? Sort.by(sort).ascending()
                 : Sort.by(sort).descending();
 
-        List<CountryDto> data = countryService.getAllCountries(sorting);
+        Pageable pagination = PageRequest.of(page, size, sorting);
+        List<CountryDto> data = countryService.getCountriesList(pagination);
         return httpResponseBuilder.build(data);
     }
 
-    @GetMapping("/continent/{id}")
+    @GetMapping("/country/{id}")
     @ResponseStatus(HttpStatus.OK)
     public HttpResponseDto<CountryDto> getCountryById(@PathVariable int id) {
         return httpResponseBuilder.build(countryService.getCountryById(id));
     }
 
-    // @PostMapping("/continent")
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public HttpResponseDto<CountryDto> createNewCountry(@Valid @RequestBody CreateCountryDto newCountry) {
-    //     // return httpResponseBuilder.build(countryService)
-    // }
-    
+    @PostMapping("/country")
+    @ResponseStatus(HttpStatus.CREATED)
+    public HttpResponseDto<CountryDto> createNewCountry(@Valid @RequestBody CreateCountryDto newCountry) {
+        return httpResponseBuilder.build(countryService.createNewCountry(newCountry));
+    }
+
+    @DeleteMapping("/country/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public HttpResponseDto<CountryDto> deleteCountry(@PathVariable int id) {
+        return httpResponseBuilder.build(countryService.deleteCountry(id));
+    }
 
 }

@@ -23,8 +23,8 @@ import lombok.*;
 public class CountryDao {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "country_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "country_id", nullable = false, updatable = false)
     private int countryId;
     
     @Column(nullable = true)
